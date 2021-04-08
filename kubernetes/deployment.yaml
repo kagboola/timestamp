@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-kubernetes
+spec:
+  selector:
+    matchLabels:
+      name: mysql-kubernetes
+  template:
+    metadata:
+      labels:
+        name: mysql-kubernetes
+    spec:
+      containers:
+        - name: app
+          image: agboolab/basic-rest-api #paulbouwer/hello-kubernetes:1.8
+          ports:
+          - containerPort: 8000
+          env: 
+          - name: STAMPS
+            valueFrom:
+              configMapKeyRef:
+                name: stamp-configmap #kubernetes_secret.secret_db
+                key: database_url

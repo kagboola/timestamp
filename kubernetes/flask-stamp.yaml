@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: stamp-webapp
+  namespace: timestamps-namespace
+  labels:
+    app: stamp-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stamp-webapp
+  template:  
+    metadata:
+      labels: 
+        app: stamp-webapp
+    spec:
+      initContainers:
+        - name: init-db
+          image: busybox:1.31
+          command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']      
+      containers:
+        - name: stamp-webapp
+          image: kagboola/bola_timestamps:latest
+          imagePullPolicy: Always
+          ports: 
+            - containerPort: 5000           
+          env: 
+          - name: STAMPS
+            valueFrom:
+              secretKeyRef:
+                name: stamp-secret 
+                key: db_root_password

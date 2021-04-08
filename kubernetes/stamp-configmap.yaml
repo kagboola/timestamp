@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stamp-configmap
+data:
+   database_url: "postgres://postgres:a2VubnkxMjM0@kenny-rds.cugmzubqhre7.eu-west-1.rds.amazonaws.com:5432/stamps_db"
