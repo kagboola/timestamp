@@ -8,3 +8,5 @@ The project contains terraform scripts to deploy infrastructure with all the fol
 •	tf-eks integrated with terraform scripts to deploy time stamp infrastructure 
 •	HPA - To scale out and scale down the pods on nodes.
 
+
+How to use this
